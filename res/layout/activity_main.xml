@@ -96,4 +96,14 @@
         android:text="停止"
         android:visibility="invisible" />
 
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:onClick="onBuildClickListener"
+        android:layout_marginTop="54dp"
+        android:text="模拟路线" />
+
 </RelativeLayout>

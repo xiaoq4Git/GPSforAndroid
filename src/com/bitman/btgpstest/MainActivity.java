@@ -1,5 +1,6 @@
 package com.bitman.btgpstest;
 
+import java.io.IOException;
 import java.util.Random;
 import java.util.Timer;
 
@@ -19,7 +20,7 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
-	private Button bStart,bPause,bStop,bRestart;
+	private Button bStart,bPause,bStop,bRestart,bTry;
 	private RadioGroup group;
 	private java.util.Timer timer;
 	
@@ -33,6 +34,8 @@ public class MainActivity extends Activity {
         bPause = (Button)this.findViewById(R.id.pause);
         bStop = (Button)this.findViewById(R.id.stop);
         bRestart = (Button)this.findViewById(R.id.goon);
+        bTry = (Button)this.findViewById(R.id.button1);
+        
         group = (RadioGroup)this.findViewById(R.id.radioGroup1);
         final Intent intent = new Intent(MainActivity.this, MockLocationService.class);
         group.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -94,6 +97,18 @@ public class MainActivity extends Activity {
         bStop.setVisibility(android.view.View.VISIBLE);
     	Toast.makeText(this, "ÔÝÍ£ÖÐ", Toast.LENGTH_SHORT).show();
     	bindService.puaseMockLocation();
+    }
+    
+    public void onBuildClickListener(View view){
+    	androidFile ff = new androidFile();
+    	try {
+			ff.ReadTxtFile("/sdcard/Download/Sichuan.gpx");
+			bindService.setLatSendList(ff.getLatList());
+			bindService.setLonSendList(ff.getLonList());
+			bindService.buildMockLocation();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     }
 
     public void onStopClickListener(View view){
