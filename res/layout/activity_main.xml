@@ -96,6 +96,15 @@
         android:text="停止"
         android:visibility="invisible" />
 
+    <TextView
+        android:id="@+id/longitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_below="@+id/button1"
+        android:layout_marginTop="22dp"
+        android:text="longitude" />
+
     <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
@@ -103,7 +112,34 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:onClick="onBuildClickListener"
-        android:layout_marginTop="54dp"
         android:text="模拟路线" />
+
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView1"
+        android:hint="请输入维度值"
+        android:layout_alignLeft="@+id/editText1"
+        android:ems="10" />
+
+    <TextView
+        android:id="@+id/latitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/editText2"
+        android:layout_alignBottom="@+id/editText2"
+        android:layout_alignLeft="@+id/textView1"
+        android:text="latitude" />
+
+    <EditText
+        android:id="@+id/editText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/longitude"
+        android:layout_alignBottom="@+id/longitude"
+        android:hint="请输入经度值"
+        android:layout_toRightOf="@+id/pause"
+        android:ems="10" />
 
 </RelativeLayout>

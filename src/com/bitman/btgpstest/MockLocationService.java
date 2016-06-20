@@ -3,8 +3,9 @@ package com.bitman.btgpstest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Timer;
 
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -31,8 +32,27 @@ public class MockLocationService extends Service {
 
 	private LocationManager mLocationManager;
 	// private static double unit = 0;
-	private static double latitude = 30.5525326188;
-	private static double longitude = 104.0329972433;
+	// private static double latitude = 30.5525326188;
+	// private static double longitude = 104.0329972433;
+	private static double LATITUDE = 31.3251197;
+
+	public static double getLatitude() {
+		return LATITUDE;
+	}
+
+	public static void setLatitude(double latitude) {
+		LATITUDE = latitude;
+	}
+
+	public static double getLongitude() {
+		return LONGITUDE;
+	}
+
+	public static void setLongitude(double longitude) {
+		LONGITUDE = longitude;
+	}
+
+	private static double LONGITUDE = 120.6103183;
 	private static double altitude = 104.0329972433;
 	private double change = 0.00004;
 	private int i = 0;
@@ -61,7 +81,20 @@ public class MockLocationService extends Service {
 				/* magic */5);
 		mLocationManager.setTestProviderEnabled(LocationManager.GPS_PROVIDER, true);
 
+		Notification notification = new Notification(R.drawable.ic_launcher, getString(R.string.app_name),
+				System.currentTimeMillis());
+
+		PendingIntent pendingintent = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), 0);
+		notification.setLatestEventInfo(this, "GPSÄ£Äâ¹¤¾ß", "Running...", pendingintent);
+		startForeground(0x111, notification);
+
 		return myBinder;
+	}
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		stopForeground(true);
 	}
 
 	public void setUPDATE_TIME(int uPDATE_TIME) {
@@ -89,34 +122,34 @@ public class MockLocationService extends Service {
 		handler.removeCallbacks(update_thread);
 		mLocationManager.removeTestProvider(LocationManager.GPS_PROVIDER);
 		mLocationManager.removeTestProvider(LocationManager.NETWORK_PROVIDER);
-		latitude = 30.5525326188;
-		longitude = 104.0329972433;
+		LATITUDE = 121.5525326188;
+		LONGITUDE = 39.2329972433;
 	}
 
 	public void buildMockLocation() {
 		Log.i(TAG, "start mock");
-			handler.post(update_thread2);
+		handler.post(update_thread2);
 	}
 
 	Runnable update_thread2 = new Runnable() {
 		public void run() {
-				latitude = latSendList.get(i);
-				longitude = lonSendList.get(i);
-				Random rand = new Random();
-				altitude = rand.nextDouble() * 50 + 500;
-				setMockLocation2(LocationManager.GPS_PROVIDER);
-				setMockLocation2(LocationManager.NETWORK_PROVIDER);
-				handler.postDelayed(update_thread2, 2500);
-				i++;
-			}
+			LATITUDE = latSendList.get(i);
+			LONGITUDE = lonSendList.get(i);
+			Random rand = new Random();
+			altitude = rand.nextDouble() * 50 + 500;
+			setMockLocation2(LocationManager.GPS_PROVIDER);
+			setMockLocation2(LocationManager.NETWORK_PROVIDER);
+			handler.postDelayed(update_thread2, 2500);
+			i++;
+		}
 	};
 
 	Runnable update_thread = new Runnable() {
 		public void run() {
 			// unit = unit+0.00002;
 			// if(unit > 1)unit = 0;
-			latitude += change;
-			longitude += change;
+			LATITUDE += change;
+			LONGITUDE += change;
 			Random rand = new Random();
 			altitude = rand.nextDouble() * 50 + 500;
 			setMockLocation(LocationManager.GPS_PROVIDER);
@@ -138,8 +171,8 @@ public class MockLocationService extends Service {
 		Location newLocation = new Location(PROVIDER);
 		// newLocation.setLatitude(30.5525326188 + unit);
 		// newLocation.setLongitude(104.0329972433 + unit);
-		newLocation.setLatitude(latitude);
-		newLocation.setLongitude(longitude);
+		newLocation.setLatitude(LATITUDE);
+		newLocation.setLongitude(LONGITUDE);
 		newLocation.setAltitude(altitude);
 		newLocation.setAccuracy(50.f);
 		newLocation.setElapsedRealtimeNanos(SystemClock.elapsedRealtimeNanos());
@@ -170,8 +203,8 @@ public class MockLocationService extends Service {
 		Location newLocation = new Location(PROVIDER);
 		// newLocation.setLatitude(30.5525326188 + unit);
 		// newLocation.setLongitude(104.0329972433 + unit);
-		newLocation.setLatitude(latitude);
-		newLocation.setLongitude(longitude);
+		newLocation.setLatitude(LATITUDE);
+		newLocation.setLongitude(LONGITUDE);
 		newLocation.setAltitude(altitude);
 		newLocation.setAccuracy(50.f);
 		newLocation.setElapsedRealtimeNanos(SystemClock.elapsedRealtimeNanos());
