@@ -3,4 +3,5 @@
     <issue id="HardcodedText">
         <ignore path="res/layout/activity_main.xml" />
     </issue>
+    <issue id="SdCardPath" severity="ignore" />
 </lint>

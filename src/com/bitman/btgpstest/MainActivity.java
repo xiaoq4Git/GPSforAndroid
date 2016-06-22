@@ -1,5 +1,6 @@
 package com.bitman.btgpstest;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Random;
 import java.util.Timer;
@@ -10,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
@@ -83,7 +85,7 @@ public class MainActivity extends Activity {
 		if (latitudeEditText.getText().length() > 1 && longitudeEditText.getText().length() > 1) {
 			bindService.setLatitude(Double.parseDouble(latitudeEditText.getText().toString()));
 			bindService.setLongitude(Double.parseDouble(longitudeEditText.getText().toString()));
-		}else{
+		} else {
 			bindService.setLatitude(30.5525326188);
 			bindService.setLongitude(104.0329972433);
 		}
@@ -111,12 +113,18 @@ public class MainActivity extends Activity {
 	}
 
 	public void onBuildClickListener(View view) {
-		androidFile ff = new androidFile();
+//		androidFile ff = new androidFile();
 		try {
-			ff.ReadTxtFile("/sdcard/Download/Sichuan.gpx");
-			bindService.setLatSendList(ff.getLatList());
-			bindService.setLonSendList(ff.getLonList());
-			bindService.buildMockLocation();
+			File file = new File("/mnt/sdcard");
+//			System.out.println(Environment.getExternalStorageDirectory());
+			for(int i =0; i< file.list().length; i++){
+				System.out.println(file.list()[i]);
+			}
+//			ff.ReadGpsFile("/sdcard/Download/Sichuan.gpx");
+//			System.out.println(ff.getLatList());
+//			bindService.setLatSendList(ff.getLatList());
+//			bindService.setLonSendList(ff.getLonList());
+//			bindService.buildMockLocation();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
